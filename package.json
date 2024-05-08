@@ -2,9 +2,9 @@
   "name": "reuse-auth-nd-bn",
   "version": "1.0.0",
   "description": "A nodeJs reusable auth basics.",
-  "main": "index.js",
+  "main": "src/index.mjs",
   "scripts": {
-    "start": "nodemon ./index.mjs"
+    "start": "node src/index.mjs"
   },
   "keywords": [
     "Auth",
