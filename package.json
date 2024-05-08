@@ -1,0 +1,25 @@
+{
+  "name": "reuse-auth-nd-bn",
+  "version": "1.0.0",
+  "description": "A nodeJs reusable auth basics.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.mjs"
+  },
+  "keywords": [
+    "Auth",
+    "JavaScript",
+    "Backend",
+    "NodeJs",
+    "JWT",
+    "MongoDB",
+    "Bcrypt",
+    "Express"
+  ],
+  "author": "ISHIMWE Isaac",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
