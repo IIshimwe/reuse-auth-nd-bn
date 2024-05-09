@@ -21,3 +21,8 @@ export const createuser = async (req, res) => {
     user: _.pick(user, ["firstName", "lastName", "email"]),
   });
 };
+
+export const getUsers = async (req, res) => {
+  const users = await User.find();
+  res.json({ users });
+};
