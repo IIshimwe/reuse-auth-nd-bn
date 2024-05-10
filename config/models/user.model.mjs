@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const userSchema = new Schema({
   firstName: {
@@ -29,5 +30,12 @@ const userSchema = new Schema({
     default: false,
   },
 });
+
+userSchema.methods.generateToken = function () {
+  return jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    process.env.JWT_SECRET_KEY
+  );
+};
 
 export default model("User", userSchema);
