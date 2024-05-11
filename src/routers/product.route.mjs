@@ -1,7 +1,11 @@
 import express from "express";
 const route = express.Router();
-import { createProduct } from "../controllers/products.model.mjs";
+import {
+  createProduct,
+  getAllProducts,
+} from "../controllers/product.controller.mjs";
 
 route.post("/", createProduct);
+route.get("/", getAllProducts);
 
 export default route;
