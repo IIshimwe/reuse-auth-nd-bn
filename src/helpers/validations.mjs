@@ -19,3 +19,14 @@ export const validateAuth = (user) => {
 
   return schema.validate(user);
 };
+
+export const validateProduct = (product) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string(),
+    price: Joi.number().required(),
+    stock: Joi.number().required(),
+  });
+
+  return schema.validate(product);
+};
