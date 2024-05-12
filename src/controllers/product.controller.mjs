@@ -19,7 +19,7 @@ export const createProduct = async (req, res) => {
 
   await product.save();
 
-  res.status(200).json({ message: product });
+  res.status(200).json({ data: product });
 };
 
 export const getAllProducts = async (req, res) => {
@@ -27,5 +27,15 @@ export const getAllProducts = async (req, res) => {
   if (!products)
     return res.status(200).json({ message: "No products registered" });
 
-  res.status(200).json({ message: products });
+  res.status(200).json({ data: products });
+};
+
+export const getProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (!product)
+    return res
+      .status(404)
+      .json({ message: "The product you are looking for does not exists" });
+
+  res.status(200).json({ data: product });
 };
