@@ -45,20 +45,22 @@ export const getProduct = async (req, res) => {
 
 // UPDATING PRODUCT
 export const updateProduct = async (req, res) => {
+  let product = await Product.findById(req.params.id);
+  if (!product)
+    return res.status(400).send("A genre you want to update does not exists");
+
   const { error } = validateProduct(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) return res.status(403).send(error.details[0].message);
 
-  try {
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      _.pick(req.body, ["name", "description", "price", "stock"]),
-      { new: true }
-    );
+  product.name = req.body.name;
+  product.description = req.body.description;
+  product.price = req.body.price;
+  product.stock = req.body.stock;
+  product.save();
 
-    res.status(200).json({ data: product });
-  } catch (error) {
-    console.log(error);
-  }
+  res
+    .status(200)
+    .send(_.pick(product, ["id", "name", "description", "price", "stock"]));
 };
 
 // DELETE PRODUCT
