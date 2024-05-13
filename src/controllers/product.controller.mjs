@@ -60,3 +60,18 @@ export const updateProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+// DELETE PRODUCT
+export const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product)
+      return res
+        .status(404)
+        .json({ message: "The product you are looking for does not exists" });
+
+    res.status(200).json({ data: product });
+  } catch (error) {
+    console.log(error);
+  }
+};
