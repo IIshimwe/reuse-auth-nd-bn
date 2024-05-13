@@ -45,22 +45,18 @@ export const getProduct = async (req, res) => {
 
 // UPDATING PRODUCT
 export const updateProduct = async (req, res) => {
-  const product = await Product.findById(req.params.id);
-  if (!product)
-    return res
-      .status(404)
-      .json({ message: "The product you are looking for does not exists" });
-
   const { error } = validateProduct(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
-  const newProduct = new Product(
-    _.pick(req.body, ["name", "description", "price", "stock"])
-  );
+  try {
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      _.pick(req.body, ["name", "description", "price", "stock"]),
+      { new: true }
+    );
 
-  const productExists = await Product.findOne({ name: newProduct.name });
-  if (productExists)
-    return res.status(400).json({ message: "Product already exists" });
-
-  res.status(200).json({ data: newProduct });
+    res.status(200).json({ data: product });
+  } catch (error) {
+    console.log(error);
+  }
 };
