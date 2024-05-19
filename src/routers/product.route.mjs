@@ -10,10 +10,10 @@ import {
   deleteProduct,
 } from "../controllers/product.controller.mjs";
 
-route.post("/", auth, isAdmin, createProduct);
+route.post("/", [auth, isAdmin], createProduct);
 route.get("/", getAllProducts);
 route.get("/:id", getProduct);
-route.put("/:id", updateProduct);
-route.delete("/:id", deleteProduct);
+route.put("/:id", [auth, isAdmin], updateProduct);
+route.delete("/:id", [auth, isAdmin], deleteProduct);
 
 export default route;
