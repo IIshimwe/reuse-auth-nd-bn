@@ -9,7 +9,11 @@ export const auth = async (req, res, next) => {
 
   try {
     const decodedPayload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (!decodedPayload) return res.status(403).json({ message: "forbidden" });
+    if (!decodedPayload)
+      return res
+        .status(403)
+        .json({ message: "You are forbidden to access this resourse." });
+    console.log("IS OUR SYSTEM REACHING HERE?");
 
     req.user = decodedPayload;
     next();
