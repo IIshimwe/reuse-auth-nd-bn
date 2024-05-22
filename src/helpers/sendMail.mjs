@@ -9,13 +9,13 @@ export const sendMail = async (to, subject, message) => {
     secure: false, // use STARTTLS
     auth: {
       user: "ixacson@gmail.com",
-      pass: "pulywmunzyyrrcyq",
+      pass: process.env.EMAIL_PASS_KEY,
     },
   });
 
   // Create an email object
   const mailOptions = {
-    from: "patrick.minegas@gmail.com", // sender address
+    from: "ixacson@gmail.com", // sender address
     to, // list of receivers
     subject, // Subject line
     html: message, // plain text body
