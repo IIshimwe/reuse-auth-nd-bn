@@ -8,14 +8,14 @@ export const sendMail = async (to, subject, message) => {
     port: 587,
     secure: false, // use STARTTLS
     auth: {
-      user: "ixacson@gmail.com",
-      pass: process.env.EMAIL_PASS_KEY,
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
     },
   });
 
   // Create an email object
   const mailOptions = {
-    from: "ixacson@gmail.com", // sender address
+    from: process.env.EMAIL_USER, // sender address
     to, // list of receivers
     subject, // Subject line
     html: message, // plain text body
@@ -24,7 +24,7 @@ export const sendMail = async (to, subject, message) => {
   // Send the email
   return transporter.sendMail(mailOptions, (error, message) => {
     if (error) {
-      console.log(error);
+      console.log(error.message);
       return false;
     } else {
       return true;
