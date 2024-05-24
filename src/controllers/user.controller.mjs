@@ -21,11 +21,12 @@ export const createuser = async (req, res) => {
 
     const subject = "Successfully registered on auth reuse";
     const message = `
-      Hi there,
+      Hello ${req.body.lastName} ${req.body.firstName},
+      <br />
       <br />
       Thank you for signing up for Auth Reuse.
-      <br />
-      <br />If you did not sign up for on this platform, you can safely ignore this email.
+      If you did not sign up on this platform, you can safely ignore this email.
+      <br /><br />
       Best,
       <br /><br />
       Isaac ISHIMWE - SWE
