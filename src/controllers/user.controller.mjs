@@ -31,6 +31,7 @@ export const createuser = async (req, res) => {
       Email: ${req.body.email}
       <br />
       Password: ${req.body.password}
+      on this link: <a href="https://www.youtube.com/watch?v=9eTNiZ3rAUg">Link</a>
       <br />
       <br />
       If you did not sign up on this platform, you can safely ignore this email.
