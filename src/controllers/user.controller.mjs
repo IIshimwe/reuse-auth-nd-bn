@@ -25,6 +25,14 @@ export const createuser = async (req, res) => {
       <br />
       <br />
       Thank you for signing up for Auth Reuse.
+      You may login to your account using the following credentials:
+      <br />
+      <br />
+      Email: ${req.body.email}
+      <br />
+      Password: ${req.body.password}
+      <br />
+      <br />
       If you did not sign up on this platform, you can safely ignore this email.
       <br /><br />
       Best,
