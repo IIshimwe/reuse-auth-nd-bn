@@ -23,6 +23,7 @@ export const validateAuth = (user) => {
 export const validateProduct = (product) => {
   const schema = Joi.object({
     name: Joi.string().required(),
+    product_image: Joi.string(),
     description: Joi.string(),
     price: Joi.number().required(),
     stock: Joi.number().required(),

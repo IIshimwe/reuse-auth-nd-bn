@@ -15,7 +15,7 @@ export const createProduct = async (req, res) => {
     });
 
   product = new Product(
-    _.pick(req.body, ["name", "description", "price", "stock"])
+    _.pick(req.body, ["name", "product_image", "description", "price", "stock"])
   );
 
   await product.save();
@@ -60,7 +60,16 @@ export const updateProduct = async (req, res) => {
 
   res
     .status(200)
-    .send(_.pick(product, ["id", "name", "description", "price", "stock"]));
+    .send(
+      _.pick(product, [
+        "id",
+        "name",
+        "product_image",
+        "description",
+        "price",
+        "stock",
+      ])
+    );
 };
 
 // DELETE PRODUCT
