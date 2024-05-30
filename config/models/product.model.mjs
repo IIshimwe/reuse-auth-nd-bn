@@ -7,6 +7,10 @@ const Product = model(
       type: String,
       required: true,
     },
+    product_image: {
+      type: String,
+      required: false,
+    },
     description: {
       type: String,
     },
