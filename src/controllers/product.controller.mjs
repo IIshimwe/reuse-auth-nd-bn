@@ -1,26 +1,62 @@
 import Product from "../../config/models/product.model.mjs";
 import { validateProduct } from "../helpers/validations.mjs";
 import _ from "lodash";
+import cloudinary from "../helpers/cloudinary.mjs";
 
 // CREATE A NEW PRODUCT
 export const createProduct = async (req, res) => {
+  const { name, product_image, description, price, stock } = req.body;
+
   const { error } = validateProduct(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
-  let product = await Product.findOne({ name: req.body.name });
-  if (product)
-    return res.status(400).json({
-      message:
-        "Product is already registered. Please register unexisting product",
+  // Cloudinary
+  const uploadResult = await cloudinary.uploader
+    .upload(product_image, {
+      folder: "reuse/products",
+      overwrite: true,
+      invalidate: true,
+      resource_type: "auto",
+    })
+    .catch((error) => {
+      console.log(error);
     });
 
-  product = new Product(
-    _.pick(req.body, ["name", "product_image", "description", "price", "stock"])
-  );
+  try {
+    let product = await Product.findOne({ name: req.body.name });
+    if (product)
+      return res.status(400).json({
+        message:
+          "Product is already registered. Please register unexisting product",
+      });
 
-  await product.save();
+    /** Using underscore package */
+    // product = new Product(
+    //   _.pick(req.body, [
+    //     "name",
+    //     "product_image",
+    //     "description",
+    //     "price",
+    //     "stock",
+    //   ])
+    // );
 
-  res.status(200).json({ data: product });
+    product = await Product.create({
+      name,
+      product_image: {
+        public_id: uploadResult.public_id,
+        url: uploadResult.secure_url,
+      },
+      description,
+      price,
+      stock,
+    });
+
+    await product.save();
+    res.status(200).json({ data: product });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 // GET ALL PRODUCTS

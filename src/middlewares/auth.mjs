@@ -13,7 +13,6 @@ export const auth = async (req, res, next) => {
       return res
         .status(403)
         .json({ message: "You are forbidden to access this resourse." });
-    console.log("IS OUR SYSTEM REACHING HERE?");
 
     req.user = decodedPayload;
     next();

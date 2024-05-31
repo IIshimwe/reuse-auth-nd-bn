@@ -8,8 +8,8 @@ const Product = model(
       required: true,
     },
     product_image: {
-      type: String,
-      required: false,
+      public_id: { type: String, required: true },
+      url: { type: String, required: true },
     },
     description: {
       type: String,
