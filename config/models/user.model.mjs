@@ -14,6 +14,10 @@ const userSchema = new Schema({
     maxlength: 100,
     required: true,
   },
+  profile_image: {
+    public_id: { type: String, required: true },
+    url: { type: String, required: true },
+  },
   email: {
     type: String,
     required: true,
