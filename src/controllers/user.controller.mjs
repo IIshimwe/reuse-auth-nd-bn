@@ -3,8 +3,23 @@ import { validateUser } from "../helpers/validations.mjs";
 import { hashPassword } from "../helpers/helper.mjs";
 import _ from "lodash";
 import { sendMail } from "../helpers/sendMail.mjs";
+import cloudinary from "../helpers/cloudinary.mjs";
 
 export const createuser = async (req, res) => {
+  const { firstName, lastName, profile_image, email, password } = req.body;
+
+  // Cloudinary
+  const uploadResult = await cloudinary.uploader
+    .upload(profile_image, {
+      folder: "reuse/users",
+      overwrite: true,
+      invalidate: true,
+      resource_type: "auto",
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+
   try {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
@@ -12,9 +27,19 @@ export const createuser = async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).json({ error: "User already exists" });
 
-    user = new User(
-      _.pick(req.body, ["firstName", "lastName", "email", "password"])
-    );
+    // user = new User(
+    //   _.pick(req.body, ["firstName", "lastName", "email", "password"])
+    // );
+    user = await User.create({
+      firstName,
+      lastName,
+      profile_image: {
+        public_id: uploadResult.public_id,
+        url: uploadResult.secure_url,
+      },
+      email,
+      password,
+    });
     user.password = await hashPassword(user.password);
 
     // Notify user that he/she has registered on the system
